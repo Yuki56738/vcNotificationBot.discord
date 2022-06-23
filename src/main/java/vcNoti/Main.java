@@ -57,7 +57,7 @@ public class Main {
         //read settings.json as file
 //        Path settingsFilePath = Paths.get("settings.json");
 //        File settingsFile = settingsFilePath.toFile();
-        System.out.println("Reading settings.json...");
+        System.out.println("Reading servers.json...");
         Gson gson = new Gson();
 //        ServerData serverData1 = null;
         Type listType = new TypeToken<HashMap<String, String>>() {
@@ -106,6 +106,9 @@ public class Main {
                 .createForServer(api.getServerById("839941661898702899").get()).join();
         SlashCommand command3 = SlashCommand.with("regtext", "register notification text channel.")
                 .createForServer(api.getServerById("977138017095520256").get()).join();
+        SlashCommand slashCommandSet2 = SlashCommand.with("regtext", "今いるテキストチャンネルを通知用として設定。")
+                .createGlobal(api)
+                .join();
 //        ServerData finalServerData = new ServerData();
 //        ServerData finalServerData1 = serverData1;
         api.addSlashCommandCreateListener(event -> {
@@ -146,7 +149,7 @@ public class Main {
                 } else {
                     System.out.println(String.format("in ServerVoiceChannelMemberJoinListener: Sending message..."));
                     ServerTextChannel serverTextChannel = api.getServerTextChannelById(servers.get(event.getServer().getIdAsString())).get();
-                    serverTextChannel.sendMessage(String.format("%sが%sに入室.", event.getUser().getDisplayName(event.getServer()).toString(), event.getChannel().getName().toString()));
+                    serverTextChannel.sendMessage(String.format("%sが%sに入ったよ〜。", event.getUser().getDisplayName(event.getServer()).toString(), event.getChannel().getName().toString()));
                 }
 
             }
@@ -159,7 +162,7 @@ public class Main {
                 } else {
                     System.out.println(String.format("in ServerVoiceChannelMemberJoinListener: Sending message..."));
                     ServerTextChannel serverTextChannel = api.getServerTextChannelById(servers.get(event.getServer().getIdAsString())).get();
-                    serverTextChannel.sendMessage(String.format("%sが%sから退出.", event.getUser().getDisplayName(event.getServer()), event.getChannel().getName().toString()));
+                    serverTextChannel.sendMessage(String.format("%sが%sから出たよ〜。", event.getUser().getDisplayName(event.getServer()), event.getChannel().getName().toString()));
                 }
             }
         });
